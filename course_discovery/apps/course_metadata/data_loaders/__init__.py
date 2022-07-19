@@ -47,7 +47,8 @@ class AbstractDataLoader(metaclass=abc.ABCMeta):
         """ Removes all leading and trailing spaces. Returns None if the resulting string is empty. """
         if not isinstance(s, str):
             return s
-
+        if not s.isascii():
+            s = s.encode('utf-8').decode('utf-8')
         return s.strip() or None
 
     @classmethod
