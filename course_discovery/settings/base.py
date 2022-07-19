@@ -329,6 +329,7 @@ LOGGING = {
             'level': level,
             'class': 'logging.StreamHandler',
             'formatter': 'standard',
+            'encoding': 'UTF-8',
             'stream': 'ext://sys.stdout',
         },
         'local': {
@@ -336,6 +337,7 @@ LOGGING = {
             'class': 'logging.handlers.SysLogHandler',
             'address': syslog_address,
             'formatter': 'syslog_format',
+            'encoding': 'UTF-8',
             'facility': SysLogHandler.LOG_LOCAL0,
         },
     },
