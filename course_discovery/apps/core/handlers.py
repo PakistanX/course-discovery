@@ -15,7 +15,11 @@ class UTF8StreamHandler(StreamHandler):
         try:
             msg = self.format(record)
             stream = self.stream
-            stream.write(str(bytes(msg + self.terminator, 'utf-8')))
+            try:
+                stream.write(msg)
+            except UnicodeError:
+                stream.write(str(bytes(msg, 'utf-8')))
+            stream.write(self.terminator)
             self.flush()
         except Exception:
             self.handleError(record)
