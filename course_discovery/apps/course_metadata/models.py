@@ -755,7 +755,7 @@ class Course(DraftModelMixin, PkSearchableMixin, CachedMixin, TimeStampedModel):
     outcome = NullHtmlField()
     prerequisites_raw = NullHtmlField()
     syllabus_raw = NullHtmlField()
-    card_image_url = models.URLField(null=True, blank=True)
+    card_image_url = models.URLField(null=True, blank=True, max_length=255)
     image = StdImageField(
         upload_to=UploadToFieldNamePath(populate_from='uuid', path='media/course/image'),
         blank=True,

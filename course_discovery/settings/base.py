@@ -327,7 +327,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'level': level,
-            'class': 'logging.StreamHandler',
+            'class': 'course_discovery.apps.core.handlers.UTF8StreamHandler',
             'formatter': 'standard',
             'stream': 'ext://sys.stdout',
         },
