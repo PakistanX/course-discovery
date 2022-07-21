@@ -5,7 +5,6 @@ import threading
 import time
 from decimal import Decimal
 from io import BytesIO
-import MySQLdb
 import backoff
 import requests
 from django.conf import settings
@@ -183,7 +182,7 @@ class CoursesApiDataLoader(AbstractDataLoader):
 
         try:
             course, created = Course.objects.get_or_create(key__iexact=course_key, partner=self.partner, defaults=defaults)
-        except MySQLdb._exceptions.DataError:
+        except:
             logger.exception(
                 'Error too long. {} {} {}'.format(defaults['card_image_url'], len(defaults['card_image_url']), Course.card_image_url.__dict__)
             )
