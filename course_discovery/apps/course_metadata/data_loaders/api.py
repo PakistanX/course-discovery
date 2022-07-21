@@ -111,7 +111,7 @@ class CoursesApiDataLoader(AbstractDataLoader):
                     if created:
                         course.canonical_course_run = course_run
                         course.save()
-            except Exception:  # pylint: disable=broad-except
+            except KeyError:  # pylint: disable=broad-except
                 msg = 'An error occurred while updating {course_run} from {api_url}'.format(
                     course_run=course_run_id,
                     api_url=self.partner.courses_api_url
