@@ -24,7 +24,7 @@ def execute_loader(loader_class, *loader_args):
     try:
         loader_class(*loader_args).ingest()
         return True
-    except Exception:  # pylint: disable=broad-except
+    except KeyError:  # pylint: disable=broad-except
         logger.exception('%s failed!', loader_class.__name__)
         return False
 
