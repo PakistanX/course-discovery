@@ -258,7 +258,8 @@ class CoursesApiDataLoader(AbstractDataLoader):
 
         if not self.partner.uses_publisher:
             defaults.update({
-                'card_image_url': body['media'].get('image', {}).get('raw'),
+                'card_image_url': body['media'].get('course_image', {}).get(
+                    'uri', 'http://localhost:18000/api/courses/v1/courses/'),
             })
 
         return defaults
