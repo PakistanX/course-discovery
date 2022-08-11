@@ -11,6 +11,8 @@ logger = logging.getLogger(__name__)
 def _is_matching_run_type(run, run_type):
     run_seat_types = set(run.seats.values_list('type', flat=True))
     type_seat_types = set(run_type.tracks.values_list('seat_type__slug', flat=True))
+    logger.info(run_seat_types)
+    logger.info(type_seat_types)
     return run_seat_types == type_seat_types
 
 
