@@ -67,7 +67,8 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
         run_types = course_run_types if run.type.empty else [run.type]
         match = None
         for run_type in run_types:
-            logger.info(run_type, run_types)
+            logger.info(run)
+            logger.info(run_types)
             if _is_matching_run_type(run, run_type):
                 match = run_type
                 break
