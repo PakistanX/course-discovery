@@ -549,6 +549,8 @@ class EcommerceApiDataLoader(AbstractDataLoader):
         price = Decimal(stock_record['price_excl_tax'])
         sku = stock_record['partner_sku']
 
+        logger.info('Trying to create seat for {}'.format(course_run.key))
+
         try:
             currency = Currency.objects.get(code=currency_code)
         except Currency.DoesNotExist:
@@ -597,6 +599,10 @@ class EcommerceApiDataLoader(AbstractDataLoader):
 
         if created:
             logger.info('Created seat for course with key [%s] and sku [%s].', course_run.key, sku)
+        else:
+            logger.info('Could not create seat for {} with data {}'.format(
+                course_run.key, (seat_type, credit_provider, currency, defaults)
+            ))
 
     def validate_stockrecord(self, stockrecords, title, product_class):
         """
