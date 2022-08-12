@@ -331,6 +331,7 @@ class EcommerceApiDataLoader(AbstractDataLoader):
 
     def _load_ecommerce_data(self):
         course_runs = self._request_course_runs(self.initial_page)
+        logger.info('fetched course runs {}'.format(course_runs['results']))
         entitlements = self._request_entitlements(self.initial_page)
         enrollment_codes = self._request_enrollment_codes(self.initial_page)
 
