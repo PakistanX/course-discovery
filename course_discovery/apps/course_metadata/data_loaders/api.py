@@ -331,7 +331,6 @@ class EcommerceApiDataLoader(AbstractDataLoader):
 
     def _load_ecommerce_data(self):
         course_runs = self._request_course_runs(self.initial_page)
-        logger.info('fetched course runs {}'.format(course_runs['results']))
         entitlements = self._request_entitlements(self.initial_page)
         enrollment_codes = self._request_enrollment_codes(self.initial_page)
 
@@ -524,7 +523,6 @@ class EcommerceApiDataLoader(AbstractDataLoader):
             logger.warning('Could not find course run [%s]', course_run_key)
             return
 
-        logger.info('Products fetched: {}'.format(body['products']))
         for product_body in body['products']:
             if product_body['structure'] != 'child':
                 continue
