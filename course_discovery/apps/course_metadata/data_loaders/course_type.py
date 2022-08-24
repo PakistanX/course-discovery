@@ -11,8 +11,6 @@ logger = logging.getLogger(__name__)
 def _is_matching_run_type(run, run_type):
     run_seat_types = set(run.seats.values_list('type', flat=True))
     type_seat_types = set(run_type.tracks.values_list('seat_type__slug', flat=True))
-    logger.info(run_seat_types)
-    logger.info(type_seat_types)
     return run_seat_types == type_seat_types
 
 
@@ -69,8 +67,6 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
         run_types = course_run_types if run.type.empty else [run.type]
         match = None
         for run_type in run_types:
-            logger.info(run)
-            logger.info(run_types)
             if _is_matching_run_type(run, run_type):
                 match = run_type
                 break

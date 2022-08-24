@@ -258,8 +258,7 @@ class CoursesApiDataLoader(AbstractDataLoader):
 
         if not self.partner.uses_publisher:
             defaults.update({
-                'card_image_url': body['media'].get('course_image', {}).get(
-                    'uri', 'http://localhost:18000/api/courses/v1/courses/'),
+                'card_image_url': body['media'].get('course_image', {}).get('uri', ''),
             })
 
         return defaults
@@ -599,10 +598,6 @@ class EcommerceApiDataLoader(AbstractDataLoader):
 
         if created:
             logger.info('Created seat for course with key [%s] and sku [%s].', course_run.key, sku)
-        else:
-            logger.info('Could not create seat for {} with data {}'.format(
-                course_run.key, (seat_type, credit_provider, currency, defaults)
-            ))
 
     def validate_stockrecord(self, stockrecords, title, product_class):
         """
