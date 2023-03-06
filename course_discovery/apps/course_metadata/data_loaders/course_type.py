@@ -37,6 +37,7 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
     matches = {}
 
     # First, early exit if entitlements don't match.
+    logger.info('\n\n1\n\n')
     if not _do_entitlements_match(course, course_type):
         logger.info('\n\nEntitlements do not match\n\n')
         return False
@@ -44,11 +45,12 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
         matches[course] = course_type
 
     course_run_types = course_type.course_run_types.order_by('created')
-
+    logger.info('\n\n2\n\n')
     if mismatches and course_type.slug in mismatches:
         # Using .order_by() here to reset the default ordering on these so we can eventually do the
         # order by created. This has to do with what operations are allowed on a union'ed QuerySet and that
         # our TimeStampedModels come with a default ordering.
+        logger.info('\n\n3\n\n')
         unmatched_course_run_types = CourseRunType.objects.filter(
             slug__in=mismatches[course_type.slug]
         ).order_by()
@@ -57,6 +59,7 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
     # Now, let's look at seat types too. If any of our CourseRunType children match a run, we'll take it.
     for run in course.course_runs.order_by('key'):  # ordered just for visible message reliability
         # Catch existing type data that doesn't match this attempted type
+        logger.info('\n\n4\n\n')
         if not run.type.empty and run.type not in course_run_types:
             logger.info(
                 _("Existing run type {run_type} for {key} ({id}) doesn't match course type {type}."
@@ -66,8 +69,11 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
 
         run_types = course_run_types if run.type.empty else [run.type]
         match = None
+        logger.info('\n\n5\n\n')
         for run_type in run_types:
+            logger.info('\n\n7\n\n')
             if _is_matching_run_type(run, run_type):
+                logger.info('\n\n7\n\n')
                 match = run_type
                 break
 
@@ -131,6 +137,7 @@ def calculate_course_type(course, course_types=None, commit=False, mismatches=No
     """
     if not course_types:
         course_types = CourseType.objects.order_by('created')
+        logger.info(course_types)
 
     # Go through all types, and use the first one that matches. No sensible thing to do if multiple matched...
     for course_type in course_types:
