@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 def _is_matching_run_type(run, run_type):
     run_seat_types = set(run.seats.values_list('type', flat=True))
     type_seat_types = set(run_type.tracks.values_list('seat_type__slug', flat=True))
+    logger.info('\n\n{}\n\n{}\n\n'.format(run_seat_types, type_seat_types))
     return run_seat_types == type_seat_types
 
 
@@ -56,7 +57,6 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
     # Now, let's look at seat types too. If any of our CourseRunType children match a run, we'll take it.
     for run in course.course_runs.order_by('key'):  # ordered just for visible message reliability
         # Catch existing type data that doesn't match this attempted type
-        logger.info('\n\n4\n\n')
         if not run.type.empty and run.type not in course_run_types:
             logger.info(
                 _("Existing run type {run_type} for {key} ({id}) doesn't match course type {type}."
