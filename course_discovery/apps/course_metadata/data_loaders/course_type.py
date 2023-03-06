@@ -71,13 +71,15 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
         match = None
         logger.info('\n\n5\n\n')
         for run_type in run_types:
-            logger.info('\n\n7\n\n')
+            logger.info('\n\n6\n\n')
             if _is_matching_run_type(run, run_type):
                 logger.info('\n\n7\n\n')
                 match = run_type
                 break
 
         if not match:
+            logger.info('\n\n8\n\n')
+            logger.info('\n\n{}\n\n{}'.format(run, run_type))
             if not run.type.empty:
                 logger.info(_("Existing run type {run_type} for {key} ({id}) doesn't match its own seats.").format(
                     run_type=run.type.name, key=run.key, id=run.id,
