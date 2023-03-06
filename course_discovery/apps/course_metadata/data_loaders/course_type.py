@@ -39,7 +39,6 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
 
     # First, early exit if entitlements don't match.
     if not _do_entitlements_match(course, course_type):
-        logger.info('\n\nEntitlements do not match\n\n')
         return False
     if course.type.empty:
         matches[course] = course_type
@@ -139,5 +138,4 @@ def calculate_course_type(course, course_types=None, commit=False, mismatches=No
         if _match_course_type(course, course_type, commit=commit, mismatches=mismatches):
             return True
 
-    logger.info('\n\n\nUnmatched course types\n\n\n')
     return False
