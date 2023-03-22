@@ -258,8 +258,7 @@ class CoursesApiDataLoader(AbstractDataLoader):
 
         if not self.partner.uses_publisher:
             defaults.update({
-                'card_image_url': body['media'].get('course_image', {}).get(
-                    'uri', 'http://localhost:18000/api/courses/v1/courses/'),
+                'card_image_url': body['media'].get('course_image', {}).get('uri', ''),
             })
 
         return defaults
@@ -548,6 +547,8 @@ class EcommerceApiDataLoader(AbstractDataLoader):
         currency_code = stock_record['price_currency']
         price = Decimal(stock_record['price_excl_tax'])
         sku = stock_record['partner_sku']
+
+        logger.info('Trying to create seat for {}'.format(course_run.key))
 
         try:
             currency = Currency.objects.get(code=currency_code)
