@@ -36,6 +36,7 @@ def _do_entitlements_match(course, course_type):
 
 def _match_course_type(course, course_type, commit=False, mismatches=None):
     matches = {}
+    log.info('Checking match')
 
     # First, early exit if entitlements don't match.
     if not _do_entitlements_match(course, course_type):
@@ -131,6 +132,7 @@ def calculate_course_type(course, course_types=None, commit=False, mismatches=No
     If this can't find or assign a type for a course or any run inside that course, it will log it and return False.
     This updates both draft and official rows (but does not require the same result for each).
     """
+    logger.info('calculating course type for %s', course)
     if not course_types:
         course_types = CourseType.objects.order_by('created')
 
