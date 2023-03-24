@@ -39,7 +39,7 @@ urlpatterns = oauth2_urlpatterns + [
     url(r'^api-auth/', include((oauth2_urlpatterns, 'rest_framework'))),
     url(r'^api-docs/', SwaggerSchemaView.as_view(), name='api_docs'),
     url(r'^auto_auth/$', core_views.AutoAuth.as_view(), name='auto_auth'),
-    url(r'^health12/$', core_views.health, name='health'),
+    url(r'^health/$', core_views.health, name='health'),
     url('^$', QueryPreviewView.as_view()),
     url(r'^publisher/', include('course_discovery.apps.publisher.urls', namespace='publisher')),
     url(r'^language-tags/', include('course_discovery.apps.ietf_language_tags.urls', namespace='language_tags')),
