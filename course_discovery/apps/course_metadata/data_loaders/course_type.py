@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 def _is_matching_run_type(run, run_type):
     run_seat_types = set(run.seats.values_list('type', flat=True))
     type_seat_types = set(run_type.tracks.values_list('seat_type__slug', flat=True))
+    logger.info('\n\n{}\n\n{}\n\n'.format(run_seat_types, type_seat_types))
     return run_seat_types == type_seat_types
 
 
@@ -35,16 +36,16 @@ def _do_entitlements_match(course, course_type):
 
 def _match_course_type(course, course_type, commit=False, mismatches=None):
     matches = {}
+    log.info('Checking match')
 
     # First, early exit if entitlements don't match.
     if not _do_entitlements_match(course, course_type):
-        logger.info('Returning {}'.format(course_type))
+        logger.info('\n\n\nReturning false entitlements do not match {}\n\n\n'.format(course_type))
         return False
     if course.type.empty:
         matches[course] = course_type
 
     course_run_types = course_type.course_run_types.order_by('created')
-
     if mismatches and course_type.slug in mismatches:
         # Using .order_by() here to reset the default ordering on these so we can eventually do the
         # order by created. This has to do with what operations are allowed on a union'ed QuerySet and that
@@ -72,10 +73,12 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
                 break
 
         if not match:
+            logger.info('\n\n{}\n\n{}'.format(run, run_types))
             if not run.type.empty:
                 logger.info(_("Existing run type {run_type} for {key} ({id}) doesn't match its own seats.").format(
                     run_type=run.type.name, key=run.key, id=run.id,
                 ))
+            logger.info('\n\nReturning False\n\n')
             return False
 
         if run.type.empty:
@@ -86,6 +89,7 @@ def _match_course_type(course, course_type, commit=False, mismatches=None):
     if not matches:
         # We already had *all* our type fields filled out, no need to do anything (if we actively didn't match,
         # we'd have already early exited False)
+        logger.info('\n\nNot Matching\n\n')
         return True
 
     logger.info(
@@ -128,6 +132,7 @@ def calculate_course_type(course, course_types=None, commit=False, mismatches=No
     If this can't find or assign a type for a course or any run inside that course, it will log it and return False.
     This updates both draft and official rows (but does not require the same result for each).
     """
+    logger.info('calculating course type for %s', course)
     if not course_types:
         course_types = CourseType.objects.order_by('created')
 
