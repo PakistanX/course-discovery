@@ -4,10 +4,12 @@ import uuid
 
 from django.conf import settings
 from django.contrib.auth import authenticate, get_user_model, login
+from django.contrib.sites.middleware import CurrentSiteMiddleware
 from django.db import DatabaseError, connection, transaction
 from django.http import Http404, JsonResponse
 from django.shortcuts import redirect
 from django.views.generic import View
+from django.utils.decorators import decorator_from_middleware
 
 from course_discovery.apps.core.constants import Status
 
@@ -21,6 +23,7 @@ User = get_user_model()
 
 
 @transaction.non_atomic_requests
+@decorator_from_middleware(CurrentSiteMiddleware)
 def health(_):
     """Allows a load balancer to verify this service is up.
 
