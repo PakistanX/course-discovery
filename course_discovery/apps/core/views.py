@@ -23,7 +23,7 @@ User = get_user_model()
 
 
 @transaction.non_atomic_requests
-@decorator_from_middleware(CurrentSiteMiddleware)
+# @decorator_from_middleware(CurrentSiteMiddleware)
 def health(_):
     """Allows a load balancer to verify this service is up.
 
