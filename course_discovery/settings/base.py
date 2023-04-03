@@ -100,7 +100,7 @@ MIDDLEWARE = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.contrib.sites.middleware.CurrentSiteMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     # 'course_discovery.apps.core.middlewares.SkipSiteMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
