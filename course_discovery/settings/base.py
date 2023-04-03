@@ -95,9 +95,9 @@ MIDDLEWARE = (
     'edx_django_utils.cache.middleware.RequestCacheMiddleware',
     'edx_rest_framework_extensions.auth.jwt.middleware.JwtAuthCookieMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # 'django.middleware.locale.LocaleMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     # 'django.contrib.sites.middleware.CurrentSiteMiddleware',
@@ -109,7 +109,7 @@ MIDDLEWARE = (
     # 'edx_django_utils.cache.middleware.TieredCacheMiddleware',
     # 'edx_rest_framework_extensions.middleware.RequestMetricsMiddleware',
     # 'edx_rest_framework_extensions.auth.jwt.middleware.EnsureJWTAuthSettingsMiddleware',
-    'course_discovery.apps.core.middlewares.SqlPrintingMiddleware'
+    # 'course_discovery.apps.core.middlewares.SqlPrintingMiddleware'
 )
 
 ROOT_URLCONF = 'course_discovery.urls'
