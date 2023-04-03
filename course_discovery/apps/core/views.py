@@ -37,13 +37,13 @@ def health(_):
         >>> response.content
         '{"overall_status": "OK", "detailed_status": {"database_status": "OK"}}'
     """
-    data = {
-        'overall_status': Status.OK,
-        'detailed_status': {
-            'database_status': Status.OK,
-        },
-    }
-    return JsonResponse(data)
+    # data = {
+    #     'overall_status': Status.OK,
+    #     'detailed_status': {
+    #         'database_status': Status.OK,
+    #     },
+    # }
+    # return JsonResponse(data)
     if newrelic:  # pragma: no cover
         newrelic.agent.ignore_transaction()
     try:
