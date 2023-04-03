@@ -38,7 +38,7 @@ def health(request):
         '{"overall_status": "OK", "detailed_status": {"database_status": "OK"}}'
     """
     if 'dev' in settings.PLATFORM_NAME.lower():
-        return
+        return JsonResponse({}, status=200)
 
     if newrelic:  # pragma: no cover
         newrelic.agent.ignore_transaction()
