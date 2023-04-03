@@ -92,6 +92,7 @@ INSTALLED_APPS += ['haystack']
 
 MIDDLEWARE = (
     'corsheaders.middleware.CorsMiddleware',
+    'course_discovery.apps.core.middlewares.SkipSiteMiddleware',
     'edx_django_utils.cache.middleware.RequestCacheMiddleware',
     'edx_rest_framework_extensions.auth.jwt.middleware.JwtAuthCookieMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -100,8 +101,7 @@ MIDDLEWARE = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # 'django.contrib.sites.middleware.CurrentSiteMiddleware',
-    'course_discovery.apps.core.middlewares.SkipSiteMiddleware',
+    'django.contrib.sites.middleware.CurrentSiteMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'waffle.middleware.WaffleMiddleware',
