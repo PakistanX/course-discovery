@@ -92,8 +92,8 @@ INSTALLED_APPS += ['haystack']
 
 MIDDLEWARE = (
     'corsheaders.middleware.CorsMiddleware',
-    # 'edx_django_utils.cache.middleware.RequestCacheMiddleware',
-    # 'edx_rest_framework_extensions.auth.jwt.middleware.JwtAuthCookieMiddleware',
+    'edx_django_utils.cache.middleware.RequestCacheMiddleware',
+    'edx_rest_framework_extensions.auth.jwt.middleware.JwtAuthCookieMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     # 'django.middleware.locale.LocaleMiddleware',
     # 'django.middleware.common.CommonMiddleware',
