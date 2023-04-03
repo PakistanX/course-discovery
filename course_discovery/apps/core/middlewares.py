@@ -12,10 +12,9 @@ class SkipSiteMiddleware(CurrentSiteMiddleware):
     """Remove SiteMiddleware if request is for /health."""
 
     def process_request(self, request):
-        if request.path in reverse('health'):
-            # logger.info('\n\n\nrequest path: {}\n\n\n'.format(request.path))
-            # return super().process_request(request)
-            return None
+        if request.path not in reverse('health'):
+            logger.info('\n\n\nrequest path: {}\n\n\n'.format(request.path))
+            return super().process_request(request)
 
 
 def terminal_width():
