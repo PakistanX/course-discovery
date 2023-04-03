@@ -106,8 +106,8 @@ MIDDLEWARE = (
     'social_django.middleware.SocialAuthExceptionMiddleware',
     'waffle.middleware.WaffleMiddleware',
     'simple_history.middleware.HistoryRequestMiddleware',
-    # 'edx_django_utils.cache.middleware.TieredCacheMiddleware',
-    # 'edx_rest_framework_extensions.middleware.RequestMetricsMiddleware',
+    'edx_django_utils.cache.middleware.TieredCacheMiddleware',
+    'edx_rest_framework_extensions.middleware.RequestMetricsMiddleware',
     # 'edx_rest_framework_extensions.auth.jwt.middleware.EnsureJWTAuthSettingsMiddleware',
     # 'course_discovery.apps.core.middlewares.SqlPrintingMiddleware'
 )
