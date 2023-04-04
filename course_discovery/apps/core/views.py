@@ -37,7 +37,7 @@ def health(request):
         >>> response.content
         '{"overall_status": "OK", "detailed_status": {"database_status": "OK"}}'
     """
-    if 'dev' in settings.PLATFORM_NAME.lower():
+    if 'dev' in request.site.name.lower():
         return JsonResponse({}, status=200)
 
     if newrelic:  # pragma: no cover
