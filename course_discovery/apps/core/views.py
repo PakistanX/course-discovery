@@ -21,7 +21,7 @@ User = get_user_model()
 
 
 @transaction.non_atomic_requests
-def health(_):
+def health(request):
     """Allows a load balancer to verify this service is up.
 
     Checks the status of the database connection on which this service relies.
@@ -37,6 +37,9 @@ def health(_):
         >>> response.content
         '{"overall_status": "OK", "detailed_status": {"database_status": "OK"}}'
     """
+    if 'dev' in request.site.name.lower():
+        return JsonResponse({}, status=200)
+
     if newrelic:  # pragma: no cover
         newrelic.agent.ignore_transaction()
     try:
