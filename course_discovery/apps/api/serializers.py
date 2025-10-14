@@ -1440,7 +1440,7 @@ class MinimalProgramSerializer(DynamicFieldsMixin, BaseModelSerializer):
         model = Program
         fields = (
             'uuid', 'title', 'subtitle', 'type', 'type_attrs', 'status', 'marketing_slug', 'marketing_url',
-            'banner_image', 'hidden', 'courses', 'authoring_organizations', 'card_image_url',
+            'banner_image', 'hidden', 'courses', 'authoring_organizations', 'card_image_url', 'program_certificate_url',
             'is_program_eligible_for_one_click_purchase', 'degree', 'curricula', 'marketing_hook',
         )
         read_only_fields = ('uuid', 'marketing_url', 'banner_image')

@@ -2026,6 +2026,7 @@ class Program(PkSearchableMixin, TimeStampedModel):
     )
     banner_image_url = models.URLField(null=True, blank=True, help_text='DEPRECATED: Use the banner image field.')
     card_image_url = models.URLField(null=True, blank=True, help_text=_('Image used for discovery cards'))
+    program_certificate_url = models.URLField(null=True, blank=True, help_text=_('Certificate template used for programs'))
     video = models.ForeignKey(Video, models.CASCADE, default=None, null=True, blank=True)
     expected_learning_items = SortedManyToManyField(ExpectedLearningItem, blank=True)
     faq = SortedManyToManyField(FAQ, blank=True)
