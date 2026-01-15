@@ -16,7 +16,7 @@ from course_discovery.apps.api.v1.views.organizations import OrganizationViewSet
 from course_discovery.apps.api.v1.views.pathways import PathwayViewSet
 from course_discovery.apps.api.v1.views.people import PersonViewSet
 from course_discovery.apps.api.v1.views.program_types import ProgramTypeViewSet
-from course_discovery.apps.api.v1.views.programs import ProgramViewSet
+from course_discovery.apps.api.v1.views.programs import ProgramViewSet, ProgramView
 from course_discovery.apps.api.v1.views.subjects import SubjectViewSet
 from course_discovery.apps.api.v1.views.topics import TopicViewSet
 from course_discovery.apps.api.v1.views.user_management import UsernameReplacementView
@@ -38,6 +38,8 @@ urlpatterns = [
     url(r'currency', CurrencyView.as_view(), name='currency'),
     url(r'^catalog/query_contains/?', CatalogQueryContainsViewSet.as_view(), name='catalog-query_contains'),
     url(r'^replace_usernames/$', UsernameReplacementView.as_view(), name="replace_usernames"),
+    url(r'program/$', ProgramView.as_view(), name='program-create'),
+    url(r'program/{}'.format(r'(?P<uuid>[0-9a-f-]+)'), ProgramView.as_view(), name='program-edit')
 ]
 
 router = routers.SimpleRouter()

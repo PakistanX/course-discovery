@@ -8,7 +8,11 @@ from course_discovery.apps.api import filters, serializers
 from course_discovery.apps.api.cache import CompressedCacheResponseMixin
 from course_discovery.apps.api.pagination import ProxiedPagination
 from course_discovery.apps.api.utils import get_query_param
-from course_discovery.apps.course_metadata.models import Program
+from course_discovery.apps.course_metadata.models import Program, Course, ProgramType
+from course_discovery.apps.course_metadata.choices import ProgramStatus
+from rest_framework.generics import UpdateAPIView
+from django.shortcuts import get_object_or_404
+from course_discovery.apps.core.models import Partner
 
 
 class ProgramViewSet(CompressedCacheResponseMixin, viewsets.ReadOnlyModelViewSet):
@@ -107,3 +111,52 @@ class ProgramViewSet(CompressedCacheResponseMixin, viewsets.ReadOnlyModelViewSet
             return Response(uuids)
 
         return super(ProgramViewSet, self).list(request, *args, **kwargs)
+
+
+class ProgramView(UpdateAPIView):
+    """Edit or Create program API."""
+
+    serializer_class = serializers.ProgramSerializer
+    lookup_field = 'uuid'
+    lookup_value_regex = '[0-9a-f-]+'
+    permission_classes = (IsAuthenticated,)
+    http_method_names = ('patch', 'post', )
+
+    def get_queryset(self):
+        program = Program.objects.filter(uuid=self.kwargs.get(self.lookup_field, ''))
+        return program
+
+    def set_courses(self, instance):
+        """Update data for program."""
+        courses = Course.objects.filter(canonical_course_run__key__in=self.request.data.get('courses', []))
+        instance.courses.set(courses)
+
+    def update(self, request, *args, **kwargs):
+        """Update program data with the provided one."""
+        partial = kwargs.pop('partial', False)
+        instance = Program.objects.get(uuid=self.kwargs.get(self.lookup_field, ''))
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        instance = serializer.save()
+        self.set_courses(instance)
+
+        if getattr(instance, '_prefetched_objects_cache', None):
+            instance._prefetched_objects_cache = {}
+
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        """Create a program with data."""
+        type = ProgramType.objects.first()
+        program = Program.objects.create(
+            type=type,
+            partner=self.request.site.partner,
+            status=ProgramStatus.Active,
+            title=request.data['title'],
+            overview=request.data['overview'],
+            card_image_url=request.data['card_image_url'],
+            marketing_slug=request.data['marketing_slug'],
+        )
+        self.set_courses(program)
+        serializer = self.get_serializer(program)
+        return Response(serializer.data)
